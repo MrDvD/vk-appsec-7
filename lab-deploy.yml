@@ -37,26 +37,26 @@
 
     - name: Allow outgoing HTTPS for download
       ufw:
-      rule: allow
-      direction: out
-      port: 443
-      proto: tcp
+        rule: allow
+        direction: out
+        port: 443
+        proto: tcp
       tags: network
 
     - name: Download application archive
       get_url:
-      url: "{{ download_url }}"
-      dest: "/tmp/app.tar.gz"
-      # now checking checksums
-      checksum: sha256:9f40b519431e9754a1680244b820877ca975aa969ea4ae72798bfe3f67d0f139
+        url: "{{ download_url }}"
+        dest: "/tmp/app.tar.gz"
+        # now checking checksums
+        checksum: sha256:9f40b519431e9754a1680244b820877ca975aa969ea4ae72798bfe3f67d0f139
       tags: download
 
     - name: Remove outgoing HTTPS rule after download
       ufw:
-      rule: deny
-      direction: out
-      port: 443
-      proto: tcp
+        rule: deny
+        direction: out
+        port: 443
+        proto: tcp
       tags: network
 
     - name: Ensure working directory exists
