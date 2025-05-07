@@ -15,11 +15,15 @@
         update_cache: yes
       tags: packages
  
-    - name: Install Docker
+    - name: Install Docker # changed because it fails for me
       apt:
-        name: docker.io
-        state: present
-      tags: docker
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
  
     - name: Docker service is running
       service:
@@ -108,7 +112,11 @@
         mode: '0755' # changed from '0777'
       tags: permissions
 
-    # added in order to use latest versions of Nginx safely
+    # these two were added in order to use latest versions of Nginx safely
+    - name: Install python-docker module
+      pip:
+        name: docker
+
     - name: Scan Nginx image using Trivy
       docker_container:
         name: trivy_scan
