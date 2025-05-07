@@ -97,7 +97,7 @@
           <head><title>Vulnerable Web App</title></head>
           <body>
             <h1>Welcome</h1>
-            <p>Your secret token: {{ secret_token.stdout }}</p>
+            <p>Your secret token is somewhere...</p>
           </body>
           </html>
         owner: "{{ app_user }}"
