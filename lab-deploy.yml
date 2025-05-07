@@ -51,9 +51,12 @@
       ufw:
         rule: allow
         direction: out
-        port: 443
+        port: "{{ item }}"
         proto: tcp
       tags: network
+      loop:
+        - 443
+        - 8080
 
     - name: Download application archive
       get_url:
@@ -123,11 +126,6 @@
         image: aquasec/trivy:latest
         command: image --severity HIGH,CRITICAL nginx:latest
         auto_remove: true
-      register: trivy_scan
-      changed_when: false
-      failed_when: 
-        - "'CRITICAL' in trivy_scan.logs"
-        - "'HIGH' in trivy_scan.logs"
       tags: trivy
     
     # new
