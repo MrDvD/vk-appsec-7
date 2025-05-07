@@ -32,6 +32,7 @@
  
     - name: Web application user exists
       user:
+        # retrieving user-password pair from env variable
         name: "{{ lookup('env', 'APP_USER') }}"
         password: "{{ lookup('env', 'APP_PASSWORD') | password_hash('sha512') }}"
         update_password: on_create
@@ -80,6 +81,7 @@
         remote_src: yes
       tags: deploy
  
+    # now not hard-coding a secret
     - name: Secret
       shell: openssl rand -hex 16 | sha512sum | awk '{print $1}' > secret.txt
       tags: token
